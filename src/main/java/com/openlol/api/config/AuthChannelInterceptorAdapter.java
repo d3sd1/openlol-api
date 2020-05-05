@@ -14,8 +14,7 @@ import javax.inject.Inject;
 
 @Component
 public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
-    private static final String USERNAME_HEADER = "login";
-    private static final String PASSWORD_HEADER = "passcode";
+    private static final String UUID_HEADER = "uuid";
     private final WebSocketAuthenticatorService webSocketAuthenticatorService;
 
     @Inject
@@ -28,10 +27,9 @@ public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
         final StompHeaderAccessor accessor = MessageHeaderAccessor.getAccessor(message, StompHeaderAccessor.class);
 
         if (StompCommand.CONNECT == accessor.getCommand()) {
-            final String username = accessor.getFirstNativeHeader(USERNAME_HEADER);
-            final String password = accessor.getFirstNativeHeader(PASSWORD_HEADER);
+            final String uuid = accessor.getFirstNativeHeader(UUID_HEADER);
             System.out.println("HEADERS: " + accessor.getMessageHeaders());
-            final UsernamePasswordAuthenticationToken user = webSocketAuthenticatorService.getAuthenticatedOrFail(username, password);
+            final UsernamePasswordAuthenticationToken user = webSocketAuthenticatorService.getAuthenticatedOrFail(uuid);
 
             accessor.setUser(user);
         }

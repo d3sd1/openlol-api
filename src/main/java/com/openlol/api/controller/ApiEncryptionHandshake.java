@@ -11,16 +11,17 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @Controller
-@RequestMapping(path = "/crypto")
+@RequestMapping(path = "/login")
 public class ApiEncryptionHandshake {
 
     AppAuthService appAuthService = new AppAuthService();
 
     @CrossOrigin
-    @GetMapping(path = "/publickey")
+    @GetMapping(path = "/fetch")
     public @ResponseBody
-    User getPublicKey(@RequestParam(value = "userId") String userId) throws Exception {
-        User user = appAuthService.getUser(userId);
+    User getPublicKey(@RequestParam(value = "userLolId") String userLolId,
+                      @RequestParam(value = "pcUuid") String pcUuid) throws Exception {
+        User user = appAuthService.getUser(pcUuid);
 
         //server generates RSA key pair - public and private keys
         generateRsaKeyPair(user);

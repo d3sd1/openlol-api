@@ -1,0 +1,1 @@
+- Start rethink db: systemctl start rethinkdb@instance1
