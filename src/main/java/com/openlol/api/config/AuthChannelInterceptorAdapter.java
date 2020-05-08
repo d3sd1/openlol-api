@@ -15,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
 
 @Component
 public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
-    private static final String UUID_HEADER = "uuid";
+    private static final String UUID_HEADER = "pc_uuid";
     private final WebSocketAuthenticatorService webSocketAuthenticatorService;
 
     @Inject
