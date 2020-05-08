@@ -1,4 +1,4 @@
-package com.openlol.api.service;
+package com.openlol.api.config;
 
 import com.rethinkdb.RethinkDB;
 import com.rethinkdb.gen.exc.ReqlOpFailedError;
@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-public class DatabaseService {
-    final RethinkDB r = RethinkDB.r;
+public class DatabaseConfig {
+    private final RethinkDB r = RethinkDB.r;
     @Value("${spring.profiles.active}")
     private String activeProfile;
     private Connection dbConnection;
@@ -37,5 +37,9 @@ public class DatabaseService {
 
     public Connection getConnection() {
         return this.dbConnection;
+    }
+
+    public RethinkDB getR() {
+        return this.r;
     }
 }

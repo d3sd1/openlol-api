@@ -11,6 +11,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
 import javax.inject.Inject;
+import java.security.NoSuchAlgorithmException;
 
 @Component
 public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
@@ -29,7 +30,12 @@ public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
         if (StompCommand.CONNECT == accessor.getCommand()) {
             final String uuid = accessor.getFirstNativeHeader(UUID_HEADER);
             System.out.println("HEADERS: " + accessor.getMessageHeaders());
-            final UsernamePasswordAuthenticationToken user = webSocketAuthenticatorService.getAuthenticatedOrFail(uuid);
+            UsernamePasswordAuthenticationToken user = null;
+            try {
+                user = webSocketAuthenticatorService.getAuthenticatedOrFail(uuid);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
 
             accessor.setUser(user);
         }
