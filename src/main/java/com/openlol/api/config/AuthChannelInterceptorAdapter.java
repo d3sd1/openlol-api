@@ -29,7 +29,6 @@ public class AuthChannelInterceptorAdapter implements ChannelInterceptor {
 
         if (StompCommand.CONNECT == accessor.getCommand()) {
             final String uuid = accessor.getFirstNativeHeader(UUID_HEADER);
-            System.out.println("HEADERS: " + accessor.getMessageHeaders());
             UsernamePasswordAuthenticationToken user = null;
             try {
                 user = webSocketAuthenticatorService.getAuthenticatedOrFail(uuid);

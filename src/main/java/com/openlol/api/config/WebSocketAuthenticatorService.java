@@ -32,9 +32,7 @@ public class WebSocketAuthenticatorService {
             this.databaseConfig.getR().
                     table("openlol_user").insert(
                     this.databaseConfig.getR().array(
-                            this.databaseConfig.getR().hashMap("pc_uuid", pcUuid),
-                            this.databaseConfig.getR().hashMap("rsa_public_key", pcUuid),
-                            this.databaseConfig.getR().hashMap("rsa_private_key", pcUuid)
+                            this.databaseConfig.getR().hashMap("pc_uuid", pcUuid)
                     )
             ).run(this.databaseConfig.getConnection());
         }
@@ -55,10 +53,14 @@ public class WebSocketAuthenticatorService {
                 row -> row.g("pc_uuid").eq(pcUuid)
         )
                 .update(this.databaseConfig.getR().array(
-                        this.databaseConfig.getR().hashMap("rsa_public_key", rsaPublicKeyBase64),
+                        this.databaseConfig.getR().hashMap("rsa_public_key", rsaPublicKeyBase64)
+                )).run(this.databaseConfig.getConnection());
+        this.databaseConfig.getR().table("openlol_user").filter(
+                row -> row.g("pc_uuid").eq(pcUuid)
+        )
+                .update(this.databaseConfig.getR().array(
                         this.databaseConfig.getR().hashMap("rsa_private_key", rsaPrivateKeyBase64)
                 )).run(this.databaseConfig.getConnection());
-
 
         //to simplify our example, User object is returned with generated RSA public key
         //RSA private key is not included in response because it should be kept as secret
