@@ -1,5 +1,8 @@
 package com.openlol.api.model;
 
+import com.openlol.api.database.RethinkDbEntity;
+
+@RethinkDbEntity("")
 public class RiotUser {
     private long realId;
     private String realPuuid;
@@ -36,6 +39,7 @@ public class RiotUser {
         return currentRegion;
     }
 
+    @RethinkDbEntity("")
     public void setCurrentRegion(Region currentRegion) {
         this.currentRegion = currentRegion;
     }
